@@ -63,8 +63,8 @@ func sendEmail(x http.ResponseWriter, r *http.Request) {
 			filename := string(bytes.Trim(main_content[0], "\"\r\n"))
 			index := bytes.Index(main_content[1], [] byte("\r\n"))
 			data_to_be_iterated := main_content[1]
-			split_content := data_to_be_iterated[index + 1: ]
-			file_content := bytes.Split(split_content, [] byte("------WebKit"))
+			split_content := data_to_be_iterated[index + 4: ]
+			file_content := bytes.Split(split_content, [] byte("\r\n------WebKit"))
 			file_data := file_content[0] //This is where the data lies
 			tempfileAttachment.Filename = filename
 			tempfileAttachment.FileContent = file_data
