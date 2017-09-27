@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+    </script>
+    <input type='file' id="myFile"><br>
+    <input type="submit" id="send" name="" value="Send">
+    <script>
+        $( "#send" ).click(function() {
+            var file = document.getElementById("myFile").files[0];
+            var reader = new FileReader();
+            reader.readAsText(file);
+            
+            var emails = '[youname@yourdomain.com]';
+            var subject = 'Test Mail';
+            var text = 'Hello World';
+
+            var message = '{to:'+ emails +',subject:'+ subject +',msg:'+ text +'}';
+
+            reader.onload = function() {
+                var form = new FormData();
+
+                form.append("Message", message);
+
+                form.append("File_A", file);
+
+                var settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": "https://api.yourdomain.com/v1/email",
+                    "method": "POST",
+                    "processData": false,
+                    "contentType": false,
+                    "mimeType": "multipart/form-data",
+                    "data": form
+                }
+
+                $.ajax(settings).done(function(response) {
+                    console.log(response);
+                });
+
+            };
+            
+
+            console.log("exit");
+
+        });
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
